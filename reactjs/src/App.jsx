@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
 
-
 function App() {
 
   return (
@@ -16,7 +15,7 @@ function App() {
           <Route
             path="/"
             element={
-              <h1>Home</h1>} />
+              <h1 className='text-red-400'>Home</h1>} />
         </Routes>
       </HashRouter>
     </>
