@@ -1,14 +1,21 @@
 import React from 'react';
 
-function Home() {
+function Home({ ethAddress, setETHAddress }) {
+  const connectMetamask = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    setETHAddress(accounts[0]);
+  }
   return (
     <div className="min-h-screen">
       <main className="container mx-auto my-8 px-4">
         <section className="text-center my-12">
           <h2 className="text-4xl font-bold mb-4">Welcome to ChainDiscourse</h2>
           <p className="text-lg text-gray-700">A decentralized platform for meaningful conversations.</p>
-          <button className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Get Started
+          <button
+            className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={connectMetamask}
+          >
+            {ethAddress ? ethAddress.slice(0, 5) + "..." + ethAddress.slice(37, 42) : 'Connect Wallet'}
           </button>
         </section>
 
