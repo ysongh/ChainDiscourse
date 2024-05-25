@@ -23,31 +23,38 @@ app.get('/connect', async (req, res) => {
   res.send('Connecting');
 });
 
-app.get('/siwe-message', async (req, res) => {
-  let nonce = await app.locals.litNodeClient.getLatestBlockhash();
-
-  const domain = 'localhost';
-  const origin = 'https://localhost/login';
-  const statement =
-    'This is a test statement.  You can put anything you want here.';
-
-  // expiration time in ISO 8601 format.  This is 7 days in the future, calculated in milliseconds
-  const expirationTime = new Date(
-    Date.now() + 1000 * 60 * 60 * 24 * 7 * 10000
-  ).toISOString();
-
-  const siweMessage = new siwe.SiweMessage({
-    domain,
-    address: address,
-    statement,
-    uri: origin,
-    version: '1',
-    chainId: 1,
-    nonce,
-    expirationTime,
-  });
-  const messageToSign = siweMessage.prepareMessage();
-  res.send(messageToSign);
+app.post('/siwe-message', async (req, res) => {
+  try {
+    const address = req.body.address;
+    console.log(address);
+    let nonce = await app.locals.litNodeClient.getLatestBlockhash();
+  
+    const domain = 'localhost';
+    const origin = 'https://localhost/login';
+    const statement =
+      'This is a test statement.  You can put anything you want here.';
+  
+    // expiration time in ISO 8601 format.  This is 7 days in the future, calculated in milliseconds
+    const expirationTime = new Date(
+      Date.now() + 1000 * 60 * 60 * 24 * 7 * 10000
+    ).toISOString();
+  
+    const siweMessage = new siwe.SiweMessage({
+      domain,
+      address: address,
+      statement,
+      uri: origin,
+      version: '1',
+      chainId: 1,
+      nonce,
+      expirationTime,
+    });
+    const messageToSign = siweMessage.prepareMessage();
+    res.send(messageToSign);
+  } catch (error) {
+    console.log(error);
+  }
+ 
 });
 
 const port = process.env.PORT || 4000;
