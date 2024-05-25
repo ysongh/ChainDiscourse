@@ -1,16 +1,16 @@
 import React from 'react';
-import { ethers } from 'ethers';
+import { BrowserProvider } from 'ethers';
 
 function Home({ ethAddress, setETHAddress }) {
   const connectMetamask = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setETHAddress(accounts[0]);
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    const provider = new BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
     console.log(signer);
   }
-  
+
   return (
     <div className="min-h-screen">
       <main className="container mx-auto my-8 px-4">
