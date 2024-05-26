@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import './App.css';
 import Home from './page/Home';
+import Chats from './page/Chats';
 
 function App() {
   const [ethAddress, setETHAddress] = useState('');
@@ -15,6 +16,10 @@ function App() {
             path="/test"
             element={
               <h1>Test</h1>} />
+          <Route
+            path="/chats"
+            element={
+              <Chats />} />
           <Route
             path="/"
             element={
