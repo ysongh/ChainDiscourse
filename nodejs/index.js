@@ -50,7 +50,7 @@ app.post('/siwe-message', async (req, res) => {
       expirationTime,
     });
     const messageToSign = siweMessage.prepareMessage();
-    res.send(messageToSign);
+    res.json(messageToSign);
   } catch (error) {
     console.log(error);
   }

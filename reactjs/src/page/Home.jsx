@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserProvider } from 'ethers';
+import { BrowserProvider, ethers } from 'ethers';
 
 function Home({ ethAddress, setETHAddress }) {
   const connectMetamask = async () => {
@@ -9,6 +9,25 @@ function Home({ ethAddress, setETHAddress }) {
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     console.log(signer);
+
+    try {
+      const response = await fetch('http://localhost:4000/siwe-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ address: signer.address }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
