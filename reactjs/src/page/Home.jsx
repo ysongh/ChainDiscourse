@@ -23,8 +23,10 @@ function Home({ ethAddress, setETHAddress }) {
         throw new Error('Network response was not ok');
       }
 
-      const result = await response.json();
-      console.log(result);
+      const messageToSign = await response.json();
+      console.log(messageToSign);
+      const signature = await signer.signMessage(messageToSign);
+      console.log(signature);
     } catch (error) {
       console.error(error);
     }
