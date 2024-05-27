@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserProvider, ethers } from 'ethers';
+import * as LitJsSdk from "@lit-protocol/lit-node-client";
 
 function Home({ ethAddress, setETHAddress }) {
   const connectMetamask = async () => {
