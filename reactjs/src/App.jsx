@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import './App.css';
 import Home from './page/Home';
 import Chats from './page/Chats';
 
