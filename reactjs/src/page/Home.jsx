@@ -3,6 +3,7 @@ import { BrowserProvider } from 'ethers';
 import {
   LitNodeClient,
 } from "@lit-protocol/lit-node-client";
+import { LitContracts } from "@lit-protocol/contracts-sdk";
 
 function Home({ ethAddress, setETHAddress }) {
   const connectMetamask = async () => {
@@ -37,7 +38,7 @@ function Home({ ethAddress, setETHAddress }) {
 
   const connectingToLitNode = async () => {
     const litNodeClient = new LitNodeClient({
-      litNetwork: 'habanero',
+      litNetwork: 'cayenne',
       debug: true,
     });
 
@@ -48,6 +49,24 @@ function Home({ ethAddress, setETHAddress }) {
 
     const latestBlockhash = await litNodeClient.getLatestBlockhash();
     console.log("latestBlockhash:", latestBlockhash);
+
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    setETHAddress(accounts[0]);
+
+    const provider = new BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    console.log(signer);
+
+    const litContracts = new LitContracts({
+      signer: signer,
+      debug: false,
+      network: 'cayenne',
+    });
+
+    await litContracts.connect();
+
+    const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+    console.log("✅ pkp:", pkp);
   }
 
   return (
