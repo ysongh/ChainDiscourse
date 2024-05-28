@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lit-protocol/auth-helpers": "6.0.0-beta.3",
     "@lit-protocol/contracts-sdk": "^5.1.0",
     "@lit-protocol/lit-node-client": "^5.1.0",
     "ethers": "^6.12.1",

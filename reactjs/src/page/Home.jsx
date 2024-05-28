@@ -3,6 +3,13 @@ import { BrowserProvider } from 'ethers';
 import {
   LitNodeClient,
 } from "@lit-protocol/lit-node-client";
+import {
+  LitPKPResource,
+  LitActionResource,
+  generateAuthSig,
+  createSiweMessageWithRecaps,
+  LitAccessControlConditionResource,
+} from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 
 function Home({ ethAddress, setETHAddress }) {
@@ -57,16 +64,43 @@ function Home({ ethAddress, setETHAddress }) {
     const signer = await provider.getSigner();
     console.log(signer);
 
-    const litContracts = new LitContracts({
-      signer: signer,
-      debug: false,
-      network: 'cayenne',
+    // const litContracts = new LitContracts({
+    //   signer: signer,
+    //   debug: false,
+    //   network: 'cayenne',
+    // });
+
+    // await litContracts.connect();
+
+    // const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+    // console.log("✅ pkp:", pkp);
+
+    const sessionSigs = await litNodeClient.getSessionSigs({
+      chain: "ethereum",
+      expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+      resourceAbilityRequests: [
+        {
+          resource: new LitActionResource("*"),
+        },
+      ],
+      authNeededCallback: async ({ resourceAbilityRequests, expiration, uri }) => {
+        const toSign = await createSiweMessageWithRecaps({
+          uri,
+          expiration,
+          resources: resourceAbilityRequests,
+          walletAddress: signer.address,
+          nonce: await litNodeClient.getLatestBlockhash(),
+          litNodeClient,
+        });
+    
+        return await generateAuthSig({
+          signer: signer,
+          toSign,
+        });
+      },
     });
 
-    await litContracts.connect();
-
-    const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-    console.log("✅ pkp:", pkp);
+    console.log("✅ sessionSigs:", sessionSigs);
   }
 
   return (
