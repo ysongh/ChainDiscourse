@@ -1,6 +1,8 @@
 import React from 'react';
-import { BrowserProvider, ethers } from 'ethers';
-import * as LitJsSdk from "@lit-protocol/lit-node-client";
+import { BrowserProvider } from 'ethers';
+import {
+  LitNodeClient,
+} from "@lit-protocol/lit-node-client";
 
 function Home({ ethAddress, setETHAddress }) {
   const connectMetamask = async () => {
@@ -33,6 +35,21 @@ function Home({ ethAddress, setETHAddress }) {
     }
   }
 
+  const connectingToLitNode = async () => {
+    const litNodeClient = new LitNodeClient({
+      litNetwork: 'habanero',
+      debug: true,
+    });
+
+    console.log("Connecting to LitNode...");
+    await litNodeClient.connect();
+    console.log(litNodeClient.config);
+    console.log(litNodeClient.connectedNodes);
+
+    const latestBlockhash = await litNodeClient.getLatestBlockhash();
+    console.log("latestBlockhash:", latestBlockhash);
+  }
+
   return (
     <div className="min-h-screen">
       <main className="container mx-auto my-8 px-4">
@@ -41,7 +58,7 @@ function Home({ ethAddress, setETHAddress }) {
           <p className="text-lg text-gray-700">A decentralized platform for meaningful conversations.</p>
           <button
             className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            onClick={connectMetamask}
+            onClick={connectingToLitNode}
           >
             {ethAddress ? ethAddress.slice(0, 5) + "..." + ethAddress.slice(37, 42) : 'Connect Wallet'}
           </button>
