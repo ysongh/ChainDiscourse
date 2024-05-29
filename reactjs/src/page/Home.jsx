@@ -102,6 +102,15 @@ function Home({ ethAddress, setETHAddress }) {
 
     console.log("✅ sessionSigs:", sessionSigs);
   }
+  
+  const disconnectLitNode = async () => {
+    const litNodeClient = new LitNodeClient({
+      litNetwork: 'cayenne',
+      debug: true,
+    });
+
+    await litNodeClient.disconnect();
+  }
 
   return (
     <div className="min-h-screen">
@@ -114,6 +123,12 @@ function Home({ ethAddress, setETHAddress }) {
             onClick={connectingToLitNode}
           >
             {ethAddress ? ethAddress.slice(0, 5) + "..." + ethAddress.slice(37, 42) : 'Connect Wallet'}
+          </button>
+          <button
+            className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={disconnectLitNode}
+          >
+            Disconnect
           </button>
         </section>
 
