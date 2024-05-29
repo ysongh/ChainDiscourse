@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserProvider } from 'ethers';
+import { ethers } from 'ethers';
 import {
   LitNodeClient,
 } from "@lit-protocol/lit-node-client";
@@ -18,8 +18,8 @@ function Home({ ethAddress, setETHAddress }) {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setETHAddress(accounts[0]);
 
-    const provider = new BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     console.log(signer);
 
     try {
@@ -61,20 +61,15 @@ function Home({ ethAddress, setETHAddress }) {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setETHAddress(accounts[0]);
 
-    const provider = new BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     console.log(signer);
 
-    // const litContracts = new LitContracts({
-    //   signer: signer,
-    //   debug: false,
-    //   network: 'cayenne',
-    // });
+    const litContracts = new LitContracts({ signer });
+    await litContracts.connect();
 
-    // await litContracts.connect();
-
-    // const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-    // console.log("✅ pkp:", pkp);
+    const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+    console.log("✅ pkp:", pkp);
 
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
