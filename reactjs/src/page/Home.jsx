@@ -9,6 +9,7 @@ import {
   generateAuthSig,
   createSiweMessageWithRecaps,
   LitAccessControlConditionResource,
+  LitAbility,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 
@@ -81,6 +82,7 @@ function Home({ ethAddress, setETHAddress }) {
       resourceAbilityRequests: [
         {
           resource: new LitActionResource("*"),
+          ability: LitAbility.LitActionExecution,
         },
       ],
       authNeededCallback: async ({ resourceAbilityRequests, expiration, uri }) => {
