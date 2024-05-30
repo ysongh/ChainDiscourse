@@ -26,3 +26,7 @@ keys.js
 *.njsproj
 *.sln
 *.sw?
+
+# Hardhat files
+cache
+artifacts
