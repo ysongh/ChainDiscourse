@@ -13,7 +13,7 @@ import {
 } from "@lit-protocol/auth-helpers";
 
 import { getTokenIDByAddress } from '../../utils/supabase';
-import { mintPKP } from '../../utils/litaction';
+import { mintPKP, getPKP } from '../../utils/litaction';
 
 function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
   const connectMetamask = async () => {
@@ -101,6 +101,8 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     const tokenID = await getTokenIDByAddress(accounts[0]);
     console.log("tokenID:", tokenID);
+
+    await getPKP(userSigner, tokenID);
   }
   
   const disconnectLitNode = async () => {
