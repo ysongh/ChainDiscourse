@@ -8,3 +8,13 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export const connect = () => {
   console.log(supabase);
 }
+
+export const getTokenIDByAddress = async (address) => {
+  let { data: user, error } = await supabase
+    .from('user')
+    .select("*")
+    .eq('address', address);
+    console.log(user, error);
+  if (error) return [];
+  return user[0].token_ID;
+}

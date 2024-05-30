@@ -13,7 +13,7 @@ import {
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 
-import { connect } from '../../utils/supabase';
+import { getTokenIDByAddress } from '../../utils/supabase';
 
 function Home({ ethAddress, setETHAddress }) {
   const connectMetamask = async () => {
@@ -103,7 +103,9 @@ function Home({ ethAddress, setETHAddress }) {
   }
 
   const connectSupabase = async () => {
-    connect();
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const tokenID = await getTokenIDByAddress(accounts[0]);
+    console.log("tokenID:", tokenID);
   }
   
   const disconnectLitNode = async () => {
