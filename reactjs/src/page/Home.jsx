@@ -13,6 +13,8 @@ import {
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 
+import { connect } from '../../utils/supabase';
+
 function Home({ ethAddress, setETHAddress }) {
   const connectMetamask = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -99,6 +101,10 @@ function Home({ ethAddress, setETHAddress }) {
 
     console.log("✅ sessionSigs:", sessionSigs);
   }
+
+  const connectSupabase = async () => {
+    connect();
+  }
   
   const disconnectLitNode = async () => {
     const litNodeClient = new LitNodeClient({
@@ -126,6 +132,12 @@ function Home({ ethAddress, setETHAddress }) {
             onClick={disconnectLitNode}
           >
             Disconnect
+          </button>
+          <button
+            className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={connectSupabase}
+          >
+            Connect Supabase
           </button>
         </section>
 
