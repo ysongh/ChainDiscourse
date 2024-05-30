@@ -11,11 +11,11 @@ import {
   LitAccessControlConditionResource,
   LitAbility,
 } from "@lit-protocol/auth-helpers";
-import { LitContracts } from "@lit-protocol/contracts-sdk";
 
 import { getTokenIDByAddress } from '../../utils/supabase';
+import { mintPKP } from '../../utils/litaction';
 
-function Home({ ethAddress, setETHAddress }) {
+function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
   const connectMetamask = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setETHAddress(accounts[0]);
@@ -23,6 +23,7 @@ function Home({ ethAddress, setETHAddress }) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     console.log(signer);
+    setUserSigner(signer);
 
     try {
       const response = await fetch('http://localhost:4000/siwe-message', {
@@ -66,12 +67,6 @@ function Home({ ethAddress, setETHAddress }) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     console.log(signer);
-
-    const litContracts = new LitContracts({ signer });
-    await litContracts.connect();
-
-    const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-    console.log("✅ pkp:", pkp);
 
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
@@ -134,6 +129,12 @@ function Home({ ethAddress, setETHAddress }) {
             onClick={disconnectLitNode}
           >
             Disconnect
+          </button>
+          <button
+            className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={() => mintPKP(userSigner)}
+          >
+            Mint PKP
           </button>
           <button
             className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"

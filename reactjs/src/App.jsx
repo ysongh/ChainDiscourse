@@ -6,6 +6,7 @@ import Chats from './page/Chats';
 
 function App() {
   const [ethAddress, setETHAddress] = useState('');
+  const [userSigner, setUserSigner] = useState(null);
 
   return (
     <>
@@ -24,7 +25,9 @@ function App() {
             element={
             <Home
               ethAddress={ethAddress}
-              setETHAddress={setETHAddress}/>} />
+              setETHAddress={setETHAddress} 
+              userSigner={userSigner}
+              setUserSigner={userSigner} />} />
         </Routes>
       </HashRouter>
     </>
