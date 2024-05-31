@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import lighthouse from '@lighthouse-web3/sdk';
+
 import Sidebar from '../components/Sidebar';
+import { LIGHTHOUSE_APIKEY } from '../../keys';
 
 const Chats = () => {
   const [messages, setMessages] = useState([]);
@@ -11,7 +14,7 @@ const Chats = () => {
   ]);
   const [currentChannel, setCurrentChannel] = useState(channels[0]);
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
     if (newMessage.trim() === '') return;
 
@@ -24,6 +27,13 @@ const Chats = () => {
 
     setMessages([...messages, message]);
     setNewMessage('');
+
+    const text = message;
+    const apiKey = LIGHTHOUSE_APIKEY;
+    const name = "test";
+
+    const response = await lighthouse.uploadText(text, apiKey, name);
+    console.log(response);
   };
 
   const filteredMessages = messages.filter(
