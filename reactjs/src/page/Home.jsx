@@ -66,7 +66,6 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    console.log(signer);
 
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
@@ -82,7 +81,7 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
           uri,
           expiration,
           resources: resourceAbilityRequests,
-          walletAddress: signer.address,
+          walletAddress: await signer.getAddress(),
           nonce: await litNodeClient.getLatestBlockhash(),
           litNodeClient,
         });
