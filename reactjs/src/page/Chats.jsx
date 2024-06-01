@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { ethers } from 'ethers';
 import lighthouse from '@lighthouse-web3/sdk';
 
 import Sidebar from '../components/Sidebar';
 import { LIGHTHOUSE_APIKEY } from '../../keys';
+import ChainDiscourse from '../artifacts/contracts/ChainDiscourse.sol/ChainDiscourse.json';
 
 const Chats = () => {
   const [messages, setMessages] = useState([]);
@@ -33,7 +35,16 @@ const Chats = () => {
     const name = "test";
 
     const response = await lighthouse.uploadText(text, apiKey, name);
-    console.log(response);
+    console.log(response.data);
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    console.log(signer);
+    const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", ChainDiscourse.abi, signer);
+
+    const transaction = await contract.addMessage("1", response.data.Hash);
+      const tx = await transaction.wait();
+      console.log(tx);
   };
 
   const filteredMessages = messages.filter(
