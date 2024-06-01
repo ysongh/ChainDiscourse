@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import lighthouse from '@lighthouse-web3/sdk';
+import axios from 'axios';
 
 import Sidebar from '../components/Sidebar';
 import { LIGHTHOUSE_APIKEY } from '../../keys';
@@ -15,6 +16,15 @@ const Chats = () => {
     { id: 3, name: 'Random' },
   ]);
   const [currentChannel, setCurrentChannel] = useState(channels[0]);
+
+  useEffect(() => {
+    getFiles();
+  }, [])
+
+  const getFiles = async () => {
+    const response = await lighthouse.getUploads(LIGHTHOUSE_APIKEY);
+    console.log(response);
+  }
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
