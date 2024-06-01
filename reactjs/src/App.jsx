@@ -8,6 +8,7 @@ import CreateKey from './page/CreateKey';
 function App() {
   const [ethAddress, setETHAddress] = useState('');
   const [userSigner, setUserSigner] = useState(null);
+  const [userSessionSigs, setUserSessionSigs] = useState('');
 
   return (
     <>
@@ -32,7 +33,9 @@ function App() {
               ethAddress={ethAddress}
               setETHAddress={setETHAddress} 
               userSigner={userSigner}
-              setUserSigner={userSigner} />} />
+              setUserSigner={userSigner}
+              userSessionSigs={userSessionSigs}
+              setUserSessionSigs={setUserSessionSigs} />} />
         </Routes>
       </HashRouter>
     </>

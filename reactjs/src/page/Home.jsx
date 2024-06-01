@@ -13,9 +13,9 @@ import {
 } from "@lit-protocol/auth-helpers";
 
 import { getTokenIDByAddress } from '../../utils/supabase';
-import { mintPKP, getPKP } from '../../utils/litaction';
+import { mintPKP, getPKP, encryptMessage } from '../../utils/litaction';
 
-function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
+function Home({ ethAddress, setETHAddress, userSigner, setUserSigner, userSessionSigs, setUserSessionSigs }) {
   const connectMetamask = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setETHAddress(accounts[0]);
@@ -94,6 +94,7 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
     });
 
     console.log("✅ sessionSigs:", sessionSigs);
+    setUserSessionSigs(sessionSigs);
   }
 
   const connectSupabase = async () => {
@@ -130,6 +131,12 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner }) {
             onClick={disconnectLitNode}
           >
             Disconnect
+          </button>
+          <button
+            className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={() => encryptMessage(userSessionSigs)}
+          >
+            Encrypt String
           </button>
           <button
             className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
