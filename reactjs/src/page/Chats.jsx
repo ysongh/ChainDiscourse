@@ -30,6 +30,13 @@ const Chats = () => {
     e.preventDefault();
     if (newMessage.trim() === '') return;
 
+    const message = {
+      id: messages.length + 1,
+      text: newMessage,
+      channel: currentChannel.id,
+      timestamp: new Date().toLocaleTimeString(),
+    };
+
     const text = message;
     const apiKey = LIGHTHOUSE_APIKEY;
     const name = "test";
@@ -45,13 +52,6 @@ const Chats = () => {
     const transaction = await contract.addMessage("1", response.data.Hash);
     const tx = await transaction.wait();
     console.log(tx);
-
-    const message = {
-      id: messages.length + 1,
-      text: newMessage,
-      channel: currentChannel.id,
-      timestamp: new Date().toLocaleTimeString(),
-    };
 
     setMessages([...messages, message]);
     setNewMessage('');
