@@ -30,16 +30,6 @@ const Chats = () => {
     e.preventDefault();
     if (newMessage.trim() === '') return;
 
-    const message = {
-      id: messages.length + 1,
-      text: newMessage,
-      channel: currentChannel.id,
-      timestamp: new Date().toLocaleTimeString(),
-    };
-
-    setMessages([...messages, message]);
-    setNewMessage('');
-
     const text = message;
     const apiKey = LIGHTHOUSE_APIKEY;
     const name = "test";
@@ -53,8 +43,18 @@ const Chats = () => {
     const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", ChainDiscourse.abi, signer);
 
     const transaction = await contract.addMessage("1", response.data.Hash);
-      const tx = await transaction.wait();
-      console.log(tx);
+    const tx = await transaction.wait();
+    console.log(tx);
+
+    const message = {
+      id: messages.length + 1,
+      text: newMessage,
+      channel: currentChannel.id,
+      timestamp: new Date().toLocaleTimeString(),
+    };
+
+    setMessages([...messages, message]);
+    setNewMessage('');
   };
 
   const filteredMessages = messages.filter(
