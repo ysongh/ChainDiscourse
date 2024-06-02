@@ -1,5 +1,6 @@
 import React from 'react';
 import { ethers } from 'ethers';
+import { useNavigate } from 'react-router-dom';
 import {
   LitNodeClient,
 } from "@lit-protocol/lit-node-client";
@@ -16,6 +17,8 @@ import { getTokenIDByAddress } from '../../utils/supabase';
 import { mintPKP, getPKP, encryptMessage } from '../../utils/litaction';
 
 function Home({ ethAddress, setETHAddress, userSigner, setUserSigner, userSessionSigs, setUserSessionSigs }) {
+  const change = useNavigate();
+
   const connectMetamask = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setETHAddress(accounts[0]);
@@ -122,6 +125,12 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner, userSessio
           <p className="text-lg text-gray-700">A decentralized platform for meaningful conversations.</p>
           <button
             className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={() => change('/chats')}
+          >
+            Get Started
+          </button>
+          {/* <button
+            className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             onClick={connectingToLitNode}
           >
             {ethAddress ? ethAddress.slice(0, 5) + "..." + ethAddress.slice(37, 42) : 'Connect Wallet'}
@@ -149,7 +158,7 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner, userSessio
             onClick={connectSupabase}
           >
             Connect Supabase
-          </button>
+          </button> */}
         </section>
 
         <section id="features" className="my-12">
