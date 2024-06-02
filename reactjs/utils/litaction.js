@@ -47,4 +47,32 @@ export const encryptMessage = async(userSessionSigs) => {
   );
 
   console.log("cipher text:", ciphertext, "hash:", dataToEncryptHash);
+
+  decryptMessage(userSessionSigs, accessControlConditions, ciphertext, dataToEncryptHash, client);
+}
+
+export const decryptMessage = async (userSessionSigs, accessControlConditions, ciphertext, dataToEncryptHash, client) => {
+  const code = `(async () => {
+    const resp = await Lit.Actions.decryptAndCombine({
+      accessControlConditions: ${accessControlConditions},
+      ciphertext: ${ciphertext},
+      dataToEncryptHash: ${dataToEncryptHash},
+      authSig: null,
+      chain: 'ethereum',
+    });
+  
+    Lit.Actions.setResponse({ response: resp });
+  })();`
+  
+  const res = await client.executeJs({
+      code,
+      sessionSigs: {userSessionSigs}, // your session
+      jsParams: {
+          accessControlConditions,
+          ciphertext,
+          dataToEncryptHash
+      }
+  });
+  
+  console.log("decrypted content sent from lit action:", res);
 }
