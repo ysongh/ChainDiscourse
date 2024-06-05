@@ -4,6 +4,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Chats from './page/Chats';
 import CreateKey from './page/CreateKey';
+import CreateSpace from './page/CreateSpace';
 
 function App() {
   const [ethAddress, setETHAddress] = useState('');
@@ -22,6 +23,10 @@ function App() {
             path="/createkey"
             element={
               <CreateKey />} />
+          <Route
+            path="/create-space"
+            element={
+              <CreateSpace />} />
           <Route
             path="/chats"
             element={
