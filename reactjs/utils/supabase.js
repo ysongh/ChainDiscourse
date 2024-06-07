@@ -18,3 +18,12 @@ export const getTokenIDByAddress = async (address) => {
   if (error) return [];
   return user[0].token_ID;
 }
+
+export const getSpaces = async () => {
+  let { data: space, error } = await supabase
+    .from('space')
+    .select('*');
+  console.log(space);
+  if (error) return [];
+  return space;
+}

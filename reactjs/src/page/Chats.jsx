@@ -5,12 +5,13 @@ import axios from 'axios';
 
 import Sidebar from '../components/Sidebar';
 import { LIGHTHOUSE_APIKEY } from '../../keys';
+import { getSpaces } from '../../utils/supabase';
 import ChainDiscourse from '../artifacts/contracts/ChainDiscourse.sol/ChainDiscourse.json';
 
 const Chats = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [channels] = useState([
+  const [channels, setChannels] = useState([
     { id: 1, name: 'General' },
     { id: 2, name: 'Tech Talk' },
     { id: 3, name: 'Random' },
@@ -18,12 +19,19 @@ const Chats = () => {
   const [currentChannel, setCurrentChannel] = useState(channels[0]);
 
   useEffect(() => {
-    getFiles();
+    // getFiles();
+    getCurrentSpaces();
   }, [])
 
   const getFiles = async () => {
     const response = await lighthouse.getUploads(LIGHTHOUSE_APIKEY);
     console.log(response);
+  }
+
+  const getCurrentSpaces = async () => {
+    const newChannels = await getSpaces();
+    console.log(newChannels);
+    setChannels(newChannels);
   }
 
   const handleSendMessage = async (e) => {
