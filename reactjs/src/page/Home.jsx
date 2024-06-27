@@ -28,26 +28,28 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner, userSessio
     console.log(signer);
     setUserSigner(signer);
 
-    try {
-      const response = await fetch('http://localhost:4000/siwe-message', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ address: signer.address }),
-      });
+    change('/chats');
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+    // try {
+    //   const response = await fetch('http://localhost:4000/siwe-message', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ address: signer.address }),
+    //   });
 
-      const messageToSign = await response.json();
-      console.log(messageToSign);
-      const signature = await signer.signMessage(messageToSign);
-      console.log(signature);
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+
+    //   const messageToSign = await response.json();
+    //   console.log(messageToSign);
+    //   const signature = await signer.signMessage(messageToSign);
+    //   console.log(signature);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   }
 
   const connectingToLitNode = async () => {
@@ -125,7 +127,7 @@ function Home({ ethAddress, setETHAddress, userSigner, setUserSigner, userSessio
           <p className="text-lg text-gray-700">A decentralized platform for meaningful conversations.</p>
           <button
             className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            onClick={() => change('/chats')}
+            onClick={connectMetamask}
           >
             Get Started
           </button>

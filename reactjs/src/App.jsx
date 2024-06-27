@@ -38,7 +38,7 @@ function App() {
               ethAddress={ethAddress}
               setETHAddress={setETHAddress} 
               userSigner={userSigner}
-              setUserSigner={userSigner}
+              setUserSigner={setUserSigner}
               userSessionSigs={userSessionSigs}
               setUserSessionSigs={setUserSessionSigs} />} />
         </Routes>
