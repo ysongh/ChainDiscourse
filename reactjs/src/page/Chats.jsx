@@ -78,7 +78,7 @@ const Chats = () => {
           setCurrentChannel={setCurrentChannel}
         />
         <div className="flex-1 flex flex-col">
-          <header className="bg-blue-600 text-white py-4">
+          <header className="bg-blue-600 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
               <h1 className="text-2xl font-bold">ChainDiscourse Chat</h1>
               <span className="text-xl">{currentChannel.name}</span>
