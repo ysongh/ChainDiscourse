@@ -26,7 +26,7 @@ function App() {
           <Route
             path="/create-space"
             element={
-              <CreateSpace />} />
+              <CreateSpace ethAddress={ethAddress} />} />
           <Route
             path="/chats"
             element={

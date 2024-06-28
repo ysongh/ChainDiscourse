@@ -27,3 +27,13 @@ export const getSpaces = async () => {
   if (error) return [];
   return space;
 }
+
+export const addSpace = async (from, name) => {
+  const { data, error } = await supabase
+    .from('space')
+    .insert([
+      { from: from, name: name },
+    ])
+    .select()
+  console.log(data);
+}

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-const CreateSpace = () => {
+import { addSpace } from '../../utils/supabase';
+
+const CreateSpace = ({ ethAddress }) => {
   const [spaceName, setSpaceName] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState(null);
@@ -9,10 +11,12 @@ const CreateSpace = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!serverName || !description) {
+    if (!spaceName || !description) {
       setError('Please fill in all fields');
       return;
     }
+
+    addSpace(ethAddress, spaceName);
   };
 
   return (
