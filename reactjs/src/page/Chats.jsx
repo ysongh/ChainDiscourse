@@ -8,7 +8,7 @@ import { LIGHTHOUSE_APIKEY } from '../../keys';
 import { getSpaces } from '../../utils/supabase';
 import ChainDiscourse from '../artifacts/contracts/ChainDiscourse.sol/ChainDiscourse.json';
 
-const Chats = () => {
+const Chats = ({ ethAddress }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [channels, setChannels] = useState([
@@ -80,7 +80,7 @@ const Chats = () => {
         <div className="flex-1 flex flex-col">
           <header className="bg-blue-600 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
-              <h1 className="text-2xl font-bold">ChainDiscourse Chat</h1>
+              <h1 className="text-2xl font-bold">Welcome {ethAddress && ethAddress.slice(0, 5) + "..." + ethAddress.slice(37, 42)}</h1>
               <span className="text-xl">{currentChannel.name}</span>
             </div>
           </header>

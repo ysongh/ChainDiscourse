@@ -30,7 +30,7 @@ function App() {
           <Route
             path="/chats"
             element={
-              <Chats />} />
+              <Chats ethAddress={ethAddress} />} />
           <Route
             path="/"
             element={
