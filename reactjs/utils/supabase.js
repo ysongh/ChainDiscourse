@@ -37,3 +37,13 @@ export const addSpace = async (from, name) => {
     .select()
   console.log(data);
 }
+
+export const addChat = async (message, spaceID, address) => {
+  const { data, error } = await supabase
+    .from('chats')
+    .insert([
+      { message: message, space_id: spaceID, user_address: address },
+    ])
+    .select()
+  console.log(data);
+}

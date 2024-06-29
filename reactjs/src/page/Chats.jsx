@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import Sidebar from '../components/Sidebar';
 import { LIGHTHOUSE_APIKEY } from '../../keys';
-import { getSpaces } from '../../utils/supabase';
+import { getSpaces, addChat } from '../../utils/supabase';
 import ChainDiscourse from '../artifacts/contracts/ChainDiscourse.sol/ChainDiscourse.json';
 
 const Chats = ({ ethAddress }) => {
@@ -45,21 +45,23 @@ const Chats = ({ ethAddress }) => {
       timestamp: new Date().toLocaleTimeString(),
     };
 
-    const text = message;
-    const apiKey = LIGHTHOUSE_APIKEY;
-    const name = "test";
+    await addChat(newMessage, currentChannel.id, ethAddress);
 
-    const response = await lighthouse.uploadText(text, apiKey, name);
-    console.log(response.data);
+    // const text = message;
+    // const apiKey = LIGHTHOUSE_APIKEY;
+    // const name = "test";
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    console.log(signer);
-    const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", ChainDiscourse.abi, signer);
+    // const response = await lighthouse.uploadText(text, apiKey, name);
+    // console.log(response.data);
 
-    const transaction = await contract.addMessage("1", response.data.Hash);
-    const tx = await transaction.wait();
-    console.log(tx);
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    // console.log(signer);
+    // const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", ChainDiscourse.abi, signer);
+
+    // const transaction = await contract.addMessage("1", response.data.Hash);
+    // const tx = await transaction.wait();
+    // console.log(tx);
 
     setMessages([...messages, message]);
     setNewMessage('');
