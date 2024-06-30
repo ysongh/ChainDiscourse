@@ -38,6 +38,7 @@ const Chats = ({ ethAddress }) => {
   const getChats = async () => {
     const chats = await getChatByID(currentChannel.id);
     console.log(chats);
+    setMessages(chats);
   }
 
   const handleSendMessage = async (e) => {
@@ -96,11 +97,11 @@ const Chats = ({ ethAddress }) => {
           <main className="flex-1 container mx-auto my-4 p-4 bg-white rounded shadow">
             <div className="flex flex-col h-full">
               <div className="flex-1 overflow-y-auto p-4 border-b border-gray-300">
-                {filteredMessages.map((message) => (
+                {messages.map((message) => (
                   <div key={message.id} className="mb-4">
-                    <div className="text-sm text-gray-600">{message.timestamp}</div>
+                    <div className="text-sm text-gray-600">{message.created_at}</div>
                     <div className="bg-blue-100 text-blue-900 p-2 rounded mt-1">
-                      {message.text}
+                      {message.message}
                     </div>
                   </div>
                 ))}
