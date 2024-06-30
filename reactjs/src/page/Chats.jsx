@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import Sidebar from '../components/Sidebar';
 import { LIGHTHOUSE_APIKEY } from '../../keys';
-import { getSpaces, addChat } from '../../utils/supabase';
+import { getSpaces, addChat, getChatByID } from '../../utils/supabase';
 import ChainDiscourse from '../artifacts/contracts/ChainDiscourse.sol/ChainDiscourse.json';
 
 const Chats = ({ ethAddress }) => {
@@ -21,6 +21,7 @@ const Chats = ({ ethAddress }) => {
   useEffect(() => {
     // getFiles();
     getCurrentSpaces();
+    getChats();
   }, [])
 
   const getFiles = async () => {
@@ -32,6 +33,11 @@ const Chats = ({ ethAddress }) => {
     const newChannels = await getSpaces();
     console.log(newChannels);
     setChannels(newChannels);
+  }
+
+  const getChats = async () => {
+    const chats = await getChatByID(currentChannel.id);
+    console.log(chats);
   }
 
   const handleSendMessage = async (e) => {

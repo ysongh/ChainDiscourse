@@ -47,3 +47,13 @@ export const addChat = async (message, spaceID, address) => {
     .select()
   console.log(data);
 }
+
+export const getChatByID = async (spaceID) => {
+  let { data, error } = await supabase
+    .from('chats')
+    .select("*")
+    .eq('space_id', spaceID);
+    console.log(data, error);
+  if (error) return [];
+  return data;
+}
