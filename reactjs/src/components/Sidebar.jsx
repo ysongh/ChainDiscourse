@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ channels, currentChannel, setCurrentChannel }) => {
+const Sidebar = ({ channels, currentChannel, changeChat }) => {
   const change = useNavigate();
 
   return (
@@ -14,7 +14,7 @@ const Sidebar = ({ channels, currentChannel, setCurrentChannel }) => {
             className={`mb-2 p-2 rounded cursor-pointer ${
               currentChannel.id === channel.id ? 'bg-gray-600' : 'bg-gray-700'
             }`}
-            onClick={() => setCurrentChannel(channel)}
+            onClick={() => changeChat(channel)}
           >
             {channel.name}
           </li>

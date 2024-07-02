@@ -41,6 +41,12 @@ const Chats = ({ ethAddress }) => {
     setMessages(chats);
   }
 
+  const changeChat = async (newChannel) => {
+    setCurrentChannel(newChannel);
+    const chats = await getChatByID(newChannel.id);
+    setMessages(chats);
+  }
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (newMessage.trim() === '') return;
@@ -84,7 +90,7 @@ const Chats = ({ ethAddress }) => {
         <Sidebar
           channels={channels}
           currentChannel={currentChannel}
-          setCurrentChannel={setCurrentChannel}
+          changeChat={changeChat}
         />
         <div className="flex-1 flex flex-col">
           <header className="bg-blue-600 text-white p-4">
