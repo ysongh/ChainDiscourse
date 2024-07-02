@@ -99,7 +99,14 @@ const Chats = ({ ethAddress }) => {
               <div className="flex-1 overflow-y-auto p-4 border-b border-gray-300">
                 {messages.map((message) => (
                   <div key={message.id} className="mb-4">
-                    <div className="text-sm text-gray-600">{message.created_at}</div>
+                    <div className="flex justify-between">
+                      <p className="text-sm text-gray-600">
+                        {message.user_address}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {message.created_at}
+                      </p>
+                    </div>
                     <div className="bg-blue-100 text-blue-900 p-2 rounded mt-1">
                       {message.message}
                     </div>
