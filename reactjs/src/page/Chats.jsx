@@ -110,7 +110,7 @@ const Chats = ({ ethAddress }) => {
                         {message.user_address}
                       </p>
                       <p className="text-sm text-gray-600">
-                        {message.created_at}
+                        {message?.created_at && new Date(message?.created_at).toLocaleDateString()} {message?.created_at && new Date(message?.created_at).toLocaleTimeString()}
                       </p>
                     </div>
                     <div className="bg-blue-100 text-blue-900 p-2 rounded mt-1">
