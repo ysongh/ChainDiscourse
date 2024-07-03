@@ -53,9 +53,10 @@ const Chats = ({ ethAddress }) => {
 
     const message = {
       id: messages.length + 1,
-      text: newMessage,
+      message: newMessage,
       channel: currentChannel.id,
-      timestamp: new Date().toLocaleTimeString(),
+      created_at: new Date().toLocaleTimeString(),
+      user_address: ethAddress,
     };
 
     await addChat(newMessage, currentChannel.id, ethAddress);
